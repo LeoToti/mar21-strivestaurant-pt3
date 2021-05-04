@@ -55,7 +55,7 @@ class Home extends React.Component {
                                     <Carousel.Item
                                         key={item.name}
                                         // the key prop must be unique for every slide
-                                        onClick={() => this.setState({ selectedDish: item })}
+                                        onClick={(e) => this.setState({ selectedDish: item })}
                                     >
                                         {/* the key is necessary for React's VIRTUAL DOM */}
                                         <img
@@ -73,14 +73,18 @@ class Home extends React.Component {
                         </Carousel>
                     </Col>
                 </Row>
-                <Row className="justify-content-center mt-3">
+                {
+
+                !this.state.selectedDish.name === "carbonara" && <Row className="justify-content-center mt-3">
                     <Col xs={12} md={8}>
                         <DishComments dish={this.state.selectedDish} marginTop={0} />
                     </Col>
                 </Row>
+                
+                }
                 <Row className="justify-content-center mt-3">
                     <Col xs={12} md={8}>
-                        <ReservationForm />
+                        <ReservationForm dish={this.state.selectedDish}/>
                     </Col>
                 </Row>
             </Container>

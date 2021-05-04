@@ -1,6 +1,7 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 
 // name
 // phone
@@ -21,7 +22,9 @@ class ReservationForm extends React.Component {
             smoking: false,
             dateTime: '',
             specialRequests: '',
-        }
+
+        },
+        isVisible : false
     }
 
     submitReservation = async (e) => {
@@ -99,9 +102,12 @@ class ReservationForm extends React.Component {
         return (
             // React Fragment, just for wrap multiple elements out of my return statement
             <>
-                <h2>Book your table NOW!</h2>
-                <Form onSubmit={this.submitReservation}>
-                    <Form.Group>
+                <h2 onClick={()=>this.setState({isVisible: !this.state.isVisible})}>Book your table NOW!</h2>
+                
+                { 
+                this.props.dish.rating >=5 &&
+                this.state.isVisible && <Form onSubmit={this.submitReservation}>
+                    && <Form.Group>
                         <Form.Label>Name</Form.Label>
                         <Form.Control
                             id="name"
@@ -202,6 +208,18 @@ class ReservationForm extends React.Component {
                         Send reservation
                     </Button>
                 </Form>
+
+                }
+                {
+
+this.props.dish.comments.filter(comment => comment.rating<5) &&
+this.state.isVisible && <Alert variant={'danger'}>
+This is a less than 5 stars rating alert—check it out!
+</Alert>
+
+
+
+                }
             </>
         )
     }
